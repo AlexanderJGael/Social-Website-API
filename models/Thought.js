@@ -33,4 +33,4 @@ const ThoughtSchema = new Schema({
 
 const Thought = model('Thought', ThoughtSchema);
 
-console.exports = Thought;
+module.exports = Thought;
