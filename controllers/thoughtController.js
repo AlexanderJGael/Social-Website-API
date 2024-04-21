@@ -68,6 +68,10 @@ module.exports = {
                 return res.status(404).json({ message: `No 'Thought' found with this id!`});
             }
 
+            const user = await User.findOneAndUpdate(
+                { thoughts: req.params.id },
+            )
+
             res.json({ message: `Thought deleted!` });
         } catch (err) {
             console.log(err);
