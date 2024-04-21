@@ -5,11 +5,10 @@ module.exports = {
     async getUsers(req, res) {
         try {
             const user = await User.find();
-            const userObj = {
-                user
-            };
+            
             res.json(user);
         } catch (err) {
+            console.log(err);
             res.status(500).json(err);
         }
     },
@@ -24,6 +23,7 @@ module.exports = {
 
             res.json(user);
         } catch (err) {
+            console.log(err);
             res.status(500).json(err);
         }
     },
@@ -31,20 +31,25 @@ module.exports = {
     async createUser(req, res) {
         try {
             const user = await User.create(req.body);
-            res.json(user);
+
+            res.json({ message: 'User created!', user });
         } catch (err) {
+            console.log(err);
             res.status(500).json(err);
         }
     },
 
     async deleteUser(req, res) {
         try {
-            const user = await User.findOneAndRemove({ _id: req.params.id });
+            const user = await User.findOneAndDelete({ _id: req.params.id });
 
             if (!user) {
                 return res.status(404).json({ message: 'No user found with this id!' });
             }
+
+            res.json({ message: 'User deleted!' });
         } catch (err) {
+            console.log(err);
             res.status(500).json(err);
         }
     },
