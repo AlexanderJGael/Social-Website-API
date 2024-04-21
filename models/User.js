@@ -11,10 +11,10 @@ const userSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-        match: {
-            validator: v => /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(v),
-            message: props => `${props.value} is not a valid email!`
-        }
+        match: [
+            /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
+            `{VALUE} is not a valid email!`
+        ]
     },
     
     thoughts: [
