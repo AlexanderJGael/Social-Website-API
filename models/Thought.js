@@ -31,4 +31,6 @@ const ThoughtSchema = new Schema({
     id: false
 });
 
-console.exports = model('Thought', ThoughtSchema);
+const Thought = model('Thought', ThoughtSchema);
+
+console.exports = Thought;

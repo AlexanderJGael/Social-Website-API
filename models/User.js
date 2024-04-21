@@ -1,6 +1,6 @@
-const { Mongoose, Model } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-const UserSchema = new Mongoose.Schema({
+const userSchema = new Schema({
     username: {
         type: String,
         unique: true,
@@ -19,13 +19,13 @@ const UserSchema = new Mongoose.Schema({
     
     thoughts: [
         {
-            type: Mongoose.Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'Thought'
         }
     ],
     friends: [
         {
-            type: Mongoose.Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'User'
         }
     ]},
@@ -38,4 +38,6 @@ const UserSchema = new Mongoose.Schema({
     },
 );
 
-module.exports = Mongoose.model('User', UserSchema);
+const User = model('User', userSchema);
+
+module.exports = User;
