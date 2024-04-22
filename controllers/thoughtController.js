@@ -17,7 +17,7 @@ module.exports = {
     async getThoughtById(req, res) {
         try {
             const thought = await Thought.findOne({ _id: req.params.id })
-            .populate('users');
+            .select('-__v')
 
             if (!thought) {
                 return res.status(400).json({ message: `No 'Thought' found with this id!` })
@@ -34,7 +34,19 @@ module.exports = {
         try {
             const thought = await Thought.create(req.body)
 
-            res.json(thought);
+            const user = await User.findOneAndUpdate(
+                { _id: thought.userId },
+                { $push: { thought: thought._id }},
+                { runValidators: true, new: true }
+            );
+
+            if (!user) {
+                return res.status(404).json({
+                    message: 'Thought created, but no user found with that ID.'
+                })
+            }
+
+            res.json('Thought created!');
         } catch (err) {
             console.log(err);
             return res.status(500).json({ message: `Error ${err}` })
