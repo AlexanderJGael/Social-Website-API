@@ -56,11 +56,11 @@ module.exports = {
     },
 
     async updateUser(req, res) {
-        try
-        {const user = await User.findOneAndUpdate(
-            { _id: req.params.id },
-            { $set: req.body },
-            { runValidators: true, new: true }
+        try {
+            const user = await User.findOneAndUpdate(
+                { _id: req.params.id },
+                { $set: req.body },
+                { runValidators: true, new: true }
             );
 
             if (!user) {
@@ -76,8 +76,8 @@ module.exports = {
     async addFriend(req, res) {
         try {
             const user = await User.findOneAndUpdate(
-                { _id: req.params.id },
-                { $addToSet: { friends: req.body } },
+                { friends: req.params.friendId },
+                { $addToSet: { friends: req.params.friendId } },
                 { new: true}
             );
 
@@ -91,4 +91,23 @@ module.exports = {
             res.status(500).json(err);
         }
     },
-}
+
+    async deleteFriend(req, res) {
+        try {
+            const user = await User.findOneAndUpdate(
+                { _id: req.params.id },
+                { $pull: { friends: req.params.friendId } },
+                { runValidators: true, new: true }
+            )
+
+            if (!user) {
+                return res.status(404).json(`${err}`);
+            }
+
+            res.json('Friend removed.');
+        } catch (err) {
+            console.log(err);
+            res.status(500).json(`${err}`);
+        }
+    },
+};
