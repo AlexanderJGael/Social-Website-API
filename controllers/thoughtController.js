@@ -18,6 +18,7 @@ module.exports = {
         try {
             const thought = await Thought.findOne({ _id: req.params.id })
             .select('-__v')
+            .populate('reactions')
 
             if (!thought) {
                 return res.status(400).json({ message: `No 'Thought' found with this id!` })
@@ -32,23 +33,21 @@ module.exports = {
 
     async createThought(req, res) {
         try {
-            const thought = await Thought.create(req.body)
-            .select('-__v')
-            .populate('reactions');
-
-            const user = await User.findOneAndUpdate(
-                { _id: req.body.userId },
-                { $push: { thought: thought._id }},
-                { runValidators: true, new: true }
-            );
+            const user = await User.findOne({ username: req.body.username })
 
             if (!user) {
-                return res.status(404).json({
-                    message: 'Thought created, but no user found with that ID.'
-                })
+                return res.status(404).json(`User not found`);
             }
 
-            res.json('Thought created!');
+            const thought = await Thought.create(req.body)
+
+            await User.findOneAndUpdate(
+                { _id: user._id },
+                {$addToSet: { thoughts: thought._id }},
+                { runValidators: true, new: true }
+            )
+
+            res.json(`Thought: '${thought.thoughtText}' created!`);
         } catch (err) {
             console.log(err);
             return res.status(500).json({ message: `Error ${err}` })
@@ -67,7 +66,7 @@ module.exports = {
                 return res.status(400).json({ message: `No 'Thought' found with this id!` })
             }
 
-            res.json(thought);
+            res.json(`Thought: '${req.body}' updated!`);
         } catch (err) {
             console.log(err);
             return res.status(500).json({ message: `Error ${err}` });
@@ -86,7 +85,7 @@ module.exports = {
                 { thoughts: req.params.id },
             )
 
-            res.json({ message: `Thought deleted!` });
+            res.json({ message: `Thought: '${thought.thoughtText}' deleted!` });
         } catch (err) {
             console.log(err);
             return res.status(500).json(err);

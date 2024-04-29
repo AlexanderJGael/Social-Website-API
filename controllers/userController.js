@@ -1,10 +1,11 @@
 const { User } = require('../models');
+const { ObjectId } = require('mongoose')
 
 module.exports = {
     async getUsers(req, res) {
         try {
             const user = await User.find()
-            .populate('thoughts');
+            .select('-__v');
             
             res.json(user);
         } catch (err) {
@@ -33,7 +34,7 @@ module.exports = {
         try {
             const user = await User.create(req.body);
 
-            res.json({ message: 'User created!', user });
+            res.json({ message: 'User created!', username: user.username, email: user.email });
         } catch (err) {
             console.log(err);
             res.status(500).json(err);
@@ -67,7 +68,7 @@ module.exports = {
                 return res.status(404).json({ message: 'No user found with this id!' });
             }
 
-            res.json(user);
+            res.json({ message: 'User updated' });
         } catch (err) {
             res.status(500).json(err);
         }
@@ -75,17 +76,24 @@ module.exports = {
 
     async addFriend(req, res) {
         try {
+            const friend = await User.findOne({ _id: req.params.friendId });
+
+            if (!friend) {
+                return res.status(404).json(`No user found at '/friend/:id'`)
+            }
+
             const user = await User.findOneAndUpdate(
-                { friends: req.params.friendId },
+                { _id: req.params.id },
                 { $addToSet: { friends: req.params.friendId } },
                 { runValidators: true, new: true }
             );
 
             if (!user) {
-                return res.status(404).json({ message: 'No user found with this id!' });
+                return res.status(404).json({ message: `No user found at 'users/:id'` });
             }
 
-            res.json('Friend added!');
+
+            res.json({ message: "Friend added", username: friend.username });
         } catch (err) {
             console.log(err);
             res.status(500).json(err);
@@ -94,6 +102,12 @@ module.exports = {
 
     async deleteFriend(req, res) {
         try {
+            const friend = await User.findOne({ _id: req.params.friendId });
+
+            if (!friend) {
+                return res.status(404).json({ message: `No user found at '/friend/:id'` })
+            };
+
             const user = await User.findOneAndUpdate(
                 { _id: req.params.id },
                 { $pull: { friends: req.params.friendId } },
@@ -104,7 +118,7 @@ module.exports = {
                 return res.status(404).json(`${err}`);
             }
 
-            res.json('Friend removed.');
+            res.json({ message: "Friend deleted", username: friend.username });
         } catch (err) {
             console.log(err);
             res.status(500).json(`${err}`);

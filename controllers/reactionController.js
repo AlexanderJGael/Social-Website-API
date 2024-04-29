@@ -1,5 +1,6 @@
 const { ObjectId } = require('mongoose');
 const { Thought, Reaction } = require('../models');
+const reactionSchema = require('../models/Reaction');
 
 module.exports = {
     async addReaction(req, res) {
@@ -14,7 +15,9 @@ module.exports = {
                 return res.status(404).json(`reaction not created`)
             }
 
-            res.json(thought)
+            const reaction = req.body.reactionBody
+
+            res.json({ message: "reaction posted", thought: thought.thoughtText, reactionBody: reaction })
         } catch (err) {
             console.log(err);
             res.status(500).json(err)
