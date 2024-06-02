@@ -11,6 +11,10 @@ This is a backend API for a social media website. It provides endpoints for mana
 ## Demonstration
 
 
+https://github.com/AlexanderJGael/Social-Website-API/assets/130517352/e69850f7-59a3-4398-bdcb-98fd484f0887
+
+
+
 ## Functionality
 - __Users__: The API allows for creating, reading, updating, and deleting users. Each user has a username, email, and a list of friends.
 
