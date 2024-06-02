@@ -29,20 +29,20 @@ To use the API, start the server by running the following command:
 
 The API provides the following endpoints:
 
-- `GET /api/users:` Get all users
-- `POST /api/users:` Create a new user
-- `GET /api/users/:id:` Get a user by ID
-- `PUT /api/users/:id:` Update a user by ID
-- `DELETE /api/users/:id:` Delete a user by ID
-- `POST /api/users/:userId/friends/:friendId:` Add a friend to a user
-- `DELETE /api/users/:userId/friends/:friendId:` Remove a friend from a user
-- `GET /api/thoughts:` Get all thoughts
-- `POST /api/thoughts:` Create a new thought
-- `GET /api/thoughts/:id:` Get a thought by ID
-- `PUT /api/thoughts/:id:` Update a thought by ID
-- `DELETE /api/thoughts/:id:` Delete a thought by ID
-- `POST /api/thoughts/:thoughtId/reactions:` Add a reaction to a thought
-- `DELETE /api/thoughts/:thoughtId/reactions/:reactionId:` Remove a reaction from a thought
+- `GET /api/users` Get all users
+- `POST /api/users` Create a new user
+- `GET /api/users/:id` Get a user by ID
+- `PUT /api/users/:id` Update a user by ID
+- `DELETE /api/users/:id` Delete a user by ID
+- `POST /api/users/:userId/friends/:friendId` Add a friend to a user
+- `DELETE /api/users/:userId/friends/:friendId` Remove a friend from a user
+- `GET /api/thoughts` Get all thoughts
+- `POST /api/thoughts` Create a new thought
+- `GET /api/thoughts/:id` Get a thought by ID
+- `PUT /api/thoughts/:id` Update a thought by ID
+- `DELETE /api/thoughts/:id` Delete a thought by ID
+- `POST /api/thoughts/:thoughtId/reactions` Add a reaction to a thought
+- `DELETE /api/thoughts/:thoughtId/reactions/:reactionId` Remove a reaction from a thought
 
 ## Technologies Used
 - __Node.js__: The API is built with Node.js, a JavaScript runtime that allows for building fast and scalable network applications.
