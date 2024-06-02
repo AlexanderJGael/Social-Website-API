@@ -1,6 +1,16 @@
 # Social Website API
 This is a backend API for a social media website. It provides endpoints for managing users, thoughts, and reactions.
 
+## Table of Contents
+- [Demonstration](#demonstration)
+- [Functionality](#functionality)
+- [Usage](#usage)
+    - [Running the App](#running-the-app)
+- [License](#license)
+
+## Demonstration
+
+
 ## Functionality
 - __Users__: The API allows for creating, reading, updating, and deleting users. Each user has a username, email, and a list of friends.
 
@@ -39,12 +49,13 @@ The API provides the following endpoints:
 
 - __Mongoose__: Mongoose is an Object Data Modeling (ODM) library for MongoDB and Node.js. It manages relationships between data, provides schema validation, and is used to translate between objects in code and the representation of those objects in MongoDB.
 
+### Running the App
 
-## Usage
-To start the server, run the following command:
+1. First, make sure you have MongoDB installed and running on your machine. You can download it from <https://www.mongodb.com/download-center>. On most systems, you will need to run `mongod` in the command line to start the server.
 
-`npm start`
+2. Once MongoDB is running, navigate to the root directory of this project in the command line. Run `npm install` to install all the dependencies for the project.
 
+3. Once all the dependencies are installed, you can start the app with `npm start`. This command will start the server and make it available at <http://localhost:3001>.
 
 ## License
 This project is licensed under MIT.
